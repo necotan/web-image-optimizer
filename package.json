@@ -9,7 +9,7 @@
   },
   "keywords": [],
   "author": "",
-  "license": "ISC",
+  "license": "MIT",
   "dependencies": {
     "piexifjs": "^1.0.6",
     "sharp": "^0.35.3"
