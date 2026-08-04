@@ -1,0 +1,17 @@
+{
+  "name": "web-image-optimizer",
+  "version": "1.0.0",
+  "description": "写真フォルダを指定して、Web公開用にリサイズ・圧縮した画像を一括生成するCLIツール",
+  "main": "resize.mjs",
+  "type": "module",
+  "scripts": {
+    "resize": "node resize.mjs"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "piexifjs": "^1.0.6",
+    "sharp": "^0.35.3"
+  }
+}
