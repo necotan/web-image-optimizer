@@ -14,7 +14,7 @@
 このリポジトリをクローンし、フォルダに移動して依存パッケージをインストールします。
 
 ```
-git clone <このリポジトリのURL>
+git clone https://github.com/necotan/web-image-optimizer.git
 cd web-image-optimizer
 npm install
 ```
