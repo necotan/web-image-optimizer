@@ -3,8 +3,11 @@ import path from 'node:path';
 import sharp from 'sharp';
 import piexif from 'piexifjs';
 
-const LONG_EDGE = 2400;
-const JPEG_QUALITY = 82;
+const PRESETS = {
+  low: { longEdge: 1600, jpegQuality: 72 },
+  default: { longEdge: 2400, jpegQuality: 82 },
+  high: { longEdge: 3200, jpegQuality: 90 },
+};
 const TARGET_EXTENSIONS = new Set(['.jpg', '.jpeg']);
 
 function formatBytes(bytes) {
@@ -29,10 +32,21 @@ function stripGpsExif(filePath) {
 
 async function main() {
   const inputDir = process.argv[2];
+  const presetName = process.argv[3] ?? 'default';
+
   if (!inputDir) {
-    console.error('使い方: npm run resize -- "<フォルダパス>"');
+    console.error(`使い方: npm run resize -- "<フォルダパス>" [プリセット名]`);
+    console.error(`プリセット: ${Object.keys(PRESETS).join(' / ')} (省略時は default)`);
     process.exit(1);
   }
+
+  const preset = PRESETS[presetName];
+  if (!preset) {
+    console.error(`不明なプリセットです: ${presetName}`);
+    console.error(`利用可能なプリセット: ${Object.keys(PRESETS).join(' / ')}`);
+    process.exit(1);
+  }
+  const { longEdge: LONG_EDGE, jpegQuality: JPEG_QUALITY } = preset;
 
   const resolvedDir = path.resolve(inputDir);
   if (!fs.existsSync(resolvedDir) || !fs.statSync(resolvedDir).isDirectory()) {
@@ -53,7 +67,7 @@ async function main() {
     return;
   }
 
-  console.log(`${files.length}件を処理します (長辺${LONG_EDGE}px / quality${JPEG_QUALITY})...`);
+  console.log(`${files.length}件を処理します (${presetName}: 長辺${LONG_EDGE}px / quality${JPEG_QUALITY})...`);
 
   let originalTotal = 0;
   let outputTotal = 0;

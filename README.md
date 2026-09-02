@@ -5,7 +5,7 @@
 ## 仕様
 
 - フォルダを指定すると、直下の `.jpg` / `.jpeg` をまとめて処理します。
-- 長辺2400px・quality82にリサイズ/圧縮し、`export/` サブフォルダに同名で出力します。
+- プリセット（`low` / `default` / `high`）に応じたサイズ・品質にリサイズ/圧縮し、`export/` サブフォルダに同名で出力します。
 - 元ファイルは一切変更を行いません。
 - 出力画像の位置情報だけを削除します。
 
@@ -25,20 +25,23 @@ npm install
 
 ```
 cd <クローンした web-image-optimizer フォルダのパス>
-npm run resize -- "<写真の入ったフォルダのパス>"
+npm run resize -- "<写真の入ったフォルダのパス>" [プリセット名]
 ```
+
+プリセット名は省略可能で、省略時は `default` が使用されます。
 
 例：
 
 ```
 cd C:\projects\web-image-optimizer
 npm run resize -- "C:\Photos\2026-08-04"
+npm run resize -- "C:\Photos\2026-08-04" high
 ```
 
 実行すると `C:\Photos\2026-08-04\export\` に変換後のファイルが生成されます。
 
 ```
-2件を処理します (長辺2400px / quality82)...
+2件を処理します (default: 長辺2400px / quality82)...
   IMG_9040.JPG: 24.8MB -> 1.8MB
   IMG_9041.JPG: 23.1MB -> 1.6MB
 
@@ -46,14 +49,15 @@ npm run resize -- "C:\Photos\2026-08-04"
 出力先: C:\Photos\2026-08-04\export
 ```
 
-## 品質設定を変えたい場合
+## プリセット
 
-`resize.mjs` 冒頭の定数を書き換えて調整します。
-
-| 定数 | デフォルト | 内容 |
+| プリセット | 長辺 | quality |
 |---|---|---|
-| `LONG_EDGE` | `2400` | 出力画像の長辺サイズ(px) |
-| `JPEG_QUALITY` | `82` | JPEG品質(0-100) |
+| `low` | 1600px | 72 |
+| `default` | 2400px | 82 |
+| `high` | 3200px | 90 |
+
+値を調整したい場合は `resize.mjs` の `PRESETS` 定数を書き換えます。
 
 ## 注意点
 
