@@ -1,6 +1,18 @@
-# web-image-optimizer
+<h1 align="center">web-image-optimizer</h1>
 
-フォルダ内のフルサイズJPEGを、Web公開用に一括でリサイズ・圧縮するCLIツールです。位置情報の自動削除にも対応しています。
+<p align="center">
+  Batch-resize and compress full-size JPEGs for the web.<br>
+  GPS data is stripped automatically, while other EXIF is kept.
+</p>
+
+<p align="center">
+  <img src="https://img.shields.io/badge/Node.js-ESM-5FA04E?logo=nodedotjs&logoColor=white">
+  <img src="https://img.shields.io/badge/sharp-Image%20Processing-99CC00">
+  <img src="https://img.shields.io/badge/Interface-CLI-4D4D4D?logo=gnubash&logoColor=white">
+  <br>
+  <img src="https://img.shields.io/badge/Privacy-GPS%20EXIF%20Removal-E05D44">
+  <a href="LICENSE"><img src="https://img.shields.io/badge/License-MIT-green"></a>
+</p>
 
 ## 仕様
 
