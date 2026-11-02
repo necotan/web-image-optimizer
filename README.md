@@ -1,6 +1,10 @@
 <h1 align="center">web-image-optimizer</h1>
 
 <p align="center">
+  English | <a href="README.ja.md">日本語</a>
+</p>
+
+<p align="center">
   Batch-resize and compress full-size JPEGs for the web.<br>
   GPS data is stripped automatically, while other EXIF is kept.
 </p>
@@ -14,16 +18,16 @@
   <a href="LICENSE"><img src="https://img.shields.io/badge/License-MIT-green"></a>
 </p>
 
-## 仕様
+## Overview
 
-- フォルダを指定すると、直下の `.jpg` / `.jpeg` をまとめて処理します。
-- プリセット（`low` / `default` / `high`）に応じたサイズ・品質にリサイズ/圧縮し、`export/` サブフォルダに同名で出力します。
-- 元ファイルは一切変更を行いません。
-- 出力画像の位置情報だけを削除します。
+- Give it a folder, and it processes all `.jpg` / `.jpeg` files directly inside it.
+- Images are resized and compressed to the size and quality of the chosen preset (`low` / `default` / `high`) and written with the same names to an `export/` subfolder.
+- The original files are never modified.
+- Only the location data is removed from the output images.
 
-## 初回セットアップ
+## Setup
 
-このリポジトリをクローンし、フォルダに移動して依存パッケージをインストールします。
+Clone this repository, move into the folder, and install the dependencies.
 
 ```
 git clone https://github.com/necotan/web-image-optimizer.git
@@ -31,18 +35,18 @@ cd web-image-optimizer
 npm install
 ```
 
-## 使い方
+## Usage
 
-`npm run resize` は、クローンした `web-image-optimizer` フォルダに移動してから実行する必要があります。実行前に必ず `cd` してください。
+`npm run resize` must be run from inside the cloned `web-image-optimizer` folder. Always `cd` into it first.
 
 ```
-cd <クローンした web-image-optimizer フォルダのパス>
-npm run resize -- "<写真の入ったフォルダのパス>" [プリセット名] [オプション]
+cd <path to the cloned web-image-optimizer folder>
+npm run resize -- "<path to the folder with your photos>" [preset] [options]
 ```
 
-プリセット名は省略可能で、省略時は `default` が使用されます。
+The preset is optional. If omitted, `default` is used.
 
-例：
+Examples:
 
 ```
 cd C:\projects\web-image-optimizer
@@ -50,7 +54,9 @@ npm run resize -- "C:\Photos\2026-08-04"
 npm run resize -- "C:\Photos\2026-08-04" high
 ```
 
-実行すると `C:\Photos\2026-08-04\export\` に変換後のファイルが生成されます。
+The converted files are written to `C:\Photos\2026-08-04\export\`.
+
+The log output is in Japanese.
 
 ```
 2件を処理します (default: 長辺2400px / quality82)...
@@ -61,30 +67,30 @@ npm run resize -- "C:\Photos\2026-08-04" high
 出力先: C:\Photos\2026-08-04\export
 ```
 
-## プリセット
+## Presets
 
-| プリセット | 長辺 | quality |
+| Preset | Long edge | Quality |
 |---|---|---|
 | `low` | 1600px | 72 |
 | `default` | 2400px | 82 |
 | `high` | 3200px | 90 |
 
-プリセットの既定値そのものを変えたい場合は `resize.mjs` の `PRESETS` 定数を書き換えます。
+To change the preset defaults themselves, edit the `PRESETS` constant in `resize.mjs`.
 
-## オプション
+## Options
 
-数値をその場で指定したい場合は、以下のオプションでプリセットの値を上書きできます。
+To set values on the spot, use the following options to override the preset values.
 
-| オプション | 内容 |
+| Option | Description |
 |---|---|
-| `-p`, `--preset <名前>` | プリセットを指定（位置引数でのプリセット指定と同様。省略時は `default`） |
-| `-q`, `--quality <1-100>` | JPEGのqualityを直接指定（プリセットより優先される） |
-| `-l`, `--long-edge <px>` | 長辺の最大ピクセル数を直接指定（プリセットより優先される） |
-| `-h`, `--help` | ヘルプを表示 |
+| `-p`, `--preset <name>` | Set the preset (same as passing it as a positional argument; defaults to `default`) |
+| `-q`, `--quality <1-100>` | Set the JPEG quality directly (takes priority over the preset) |
+| `-l`, `--long-edge <px>` | Set the maximum long-edge size in pixels directly (takes priority over the preset) |
+| `-h`, `--help` | Show help |
 
-値は `--quality 95` でも `--quality=95` でも指定できます。
+Values can be given as either `--quality 95` or `--quality=95`.
 
-例：
+Examples:
 
 ```
 npm run resize -- "C:\Photos\2026-08-04" --quality 95
@@ -92,14 +98,14 @@ npm run resize -- "C:\Photos\2026-08-04" --long-edge 1200 --quality 60
 npm run resize -- "C:\Photos\2026-08-04" high --quality 95
 ```
 
-プリセットとオプションを併用した場合は、指定したオプションの項目だけがプリセットの値を上書きします。（上記3つ目の例では、長辺は `high` の3200px、qualityは95）オプションで上書きしたときは、実行ログのプリセット名の表示が `カスタム` になります。
+When you combine a preset with options, only the values you set with options override the preset. (In the third example above, the long edge is 3200px from `high` and the quality is 95.) When an option overrides a value, the preset name in the log shows as `カスタム` (custom).
 
 ```
 1件を処理します (カスタム: 長辺3200px / quality95)...
 ```
 
-## 注意点
+## Notes
 
-- 対象はフォルダ直下の`.jpg`/`.jpeg`のみです。
-- 既に長辺が`LONG_EDGE`以下の画像は拡大せずそのまま出力します。
-- 位置情報以外のEXIF情報（撮影日時、カメラ機種、露出設定など）は保持されます。
+- Only `.jpg` / `.jpeg` files directly inside the folder are processed.
+- Images whose long edge is already at or below `LONG_EDGE` are not upscaled and are output at their original size.
+- EXIF data other than location (capture date and time, camera model, exposure settings, etc.) is kept.
